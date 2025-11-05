@@ -26,38 +26,7 @@ class Constants(BaseConstants):
         large_piles.append(large_pile * base ** node)
         small_piles.append(small_pile * base ** node)
 
-        large_piles_practice = large_piles.copy()
-        small_piles_practice = small_piles.copy()
 
-        columns_range = range(4 + num_nodes)
-        rounds_range = range(1, num_nodes + 1)
-
-        payoff_red_practice = large_piles_practice.copy()
-        for i in range(len(large_piles_practice)):
-            if i % 2 != 0:
-                payoff_red_practice[i] = small_piles_practice[i]
-
-        payoff_blue_practice = small_piles_practice.copy()
-        for i in range(len(payoff_blue_practice)):
-            if i % 2 != 0:
-                payoff_blue_practice[i] = large_piles_practice[i]
-
-        movesList = ['P' for n in range(num_nodes)]
-        movesMatrix = [movesList.copy()]
-
-        for i in range(num_nodes):
-            mc = movesList.copy()
-            for j in range(num_nodes):
-                if j <= i:
-                    mc[i - j] = ''
-                    mc[i] = 'T'
-            mc.reverse()
-            movesMatrix.append(mc)
-
-        movesMatrix.reverse()
-
-        instructionsMatrix = list(zip(movesMatrix, large_piles_practice, small_piles_practice,
-                                      payoff_red_practice, payoff_blue_practice))
 
 class Subsession(BaseSubsession):
     game = models.IntegerField(initial=1)
@@ -121,14 +90,15 @@ class Decision(Page):
 
     def vars_for_template(player):
         return dict(
-            game =  player.current_app_name,
+            game =  Constants.name_in_url,
+            player_name=player.participant.label,
             num_nodes =  Constants.num_nodes,
             game_node = player.subsession.game_node,
             large_pile = Constants.large_piles[player.subsession.game_node - 1],
             small_pile = Constants.small_piles[player.subsession.game_node - 1]
         )
 
-    def before_next_page(player):
+    def before_next_page(player, timeout_happened):
         opponent = player.get_others_in_group()[0]
         player.current_app_name = Constants.name_in_url
         player.player_name = player.participant.label
@@ -149,9 +119,8 @@ class WaitPage2(WaitPage):
         visible = player.group.game_on
         return visible
 
-    def after_all_players_arrive(player):
-        group = player.group
-        subsession = player.subsession
+    def after_all_players_arrive(group):
+        subsession = group.subsession
 
         players = group.get_players()
         someone_took = any(p.field_maybe_none('take') for p in players)
