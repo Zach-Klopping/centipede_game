@@ -1,0 +1,59 @@
+{% block content %}
+<h2 style="text-align:center; margin-bottom:20px;">Game Summary for Player {{ player_name }}</h2>
+
+<style>
+    table.summary {
+        width: 80%;
+        margin: auto;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+    table.summary th, table.summary td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    table.summary th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    table.summary tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    table.summary tfoot {
+        font-weight: bold;
+        background-color: #eee;
+    }
+</style>
+
+<table class="summary">
+    <thead>
+        <tr>
+            <th>Game</th>
+            <th>Player ID</th>
+            <th>Period of Keep</th>
+            <th>Took?</th>
+            <th>Opponent Payoff</th>
+            <th>My Payoff</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in game_data %}
+        <tr>
+            <td>{{ row.game_number }}</td>
+            <td>{{ row.player_id }}</td>
+            <td>{{ row.round_number }}</td>
+            <td>{% if row.take %}Yes{% else %}No{% endif %}</td>
+            <td>{{ row.opponent_payoff_str }}</td>
+            <td>{{ row.payoff_str }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">My Total Payoff</td>
+            <td>{{ total_payoff }}</td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

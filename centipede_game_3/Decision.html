@@ -1,5 +1,5 @@
 {% block title %}
-    Centipede Game {{ game }} for {{ player_name }} at Period {{ game_node }}
+    Centipede Game {{ game }} at Period {{ game_node }}
 {% endblock %}
 
 {% block content %}
@@ -8,9 +8,9 @@
 <!-- Player's color info -->
 <div class="card my-5">
     {% if player.id_in_group == 1 %}
-    <div class="card-header">You are the <font style="color:red;">RED</font> player</div>
+    <div class="card-header">You are the <span style="color:red;">RED</span> player</div>
     {% else %}
-    <div class="card-header">You are the <font style="color:blue;">BLUE</font> player</div>
+    <div class="card-header">You are the <span style="color:blue;">BLUE</span> player</div>
     {% endif %}
 </div>
 
@@ -146,11 +146,8 @@
         </tbody>
     </table>
 </div>
-
-
-        <!-- Decision -->
-        <p>Do You Want To Take The Payoff Or Pass?</p>
-
+    <!-- Decision -->
+    <p>Do You Want To Take The Payoff Or Pass?</p>
     <div class="btn-div">
 
         <label id="take-label" class="btn btn-outline-primary">
@@ -162,12 +159,7 @@
             </label>
         {% endif %}
     </div>
-
-
-<button class="btn btn-primary" type="submit">Submit</button>
-
-
+<button style="margin-top: 2vh" class="btn btn-primary" type="submit">Submit</button>
   </div>
 </div>
-
 {% endblock %}

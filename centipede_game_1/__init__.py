@@ -12,8 +12,8 @@ class Constants(BaseConstants):
     num_games = 1
     num_rounds = num_nodes * num_games
 
-    first_rounds = np.arange(1,num_rounds,num_nodes)
-    last_rounds = np.arange(num_nodes,num_rounds+1,num_nodes)
+    first_rounds = np.arange(1, num_rounds, num_nodes)
+    last_rounds = np.arange(num_nodes,num_rounds + 1, num_nodes)
 
     large_pile = 30
     small_pile = 10
@@ -28,49 +28,49 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    game = models.IntegerField(initial=1)
-    game_node = models.IntegerField(initial=1)
-
-    def creating_session(player):
-        if player.round_number == 1:
-            player.group_randomly(fixed_id_in_group=True)
-        else:
-            player.group_like_round(1)
-
-        current_round = player.round_number
-
-        player.game = int(np.ceil(current_round / Constants.num_nodes))
-        player.game_node = int(current_round - (np.ceil(current_round / Constants.num_nodes) - 1) * Constants.num_nodes)
-
+    pass
+        
 
 class Group(BaseGroup):
     game_on = models.BooleanField(initial=True)
     game_outcome = models.IntegerField(initial=0)
     last_node = models.IntegerField(initial=1)
 
-    def stop_game(player):
-        players = player.get_players()
+    def stop_game(group):
+        players = group.get_players()
         for p in players:
             value = p.field_maybe_none('take')
-
             if value is True:
-                player.game_on = False
-                player.game_outcome = p.id_in_group
-                player.last_node = player.round_number
+                group.game_on = False
+                group.game_outcome = p.id_in_group
+                group.last_node = p.round_number
+            
+                # assign payoffs
+                for q in players:
+                    if q.id_in_group == p.id_in_group:  # the player who took
+                        q.payoff_final = Constants.large_piles[group.last_node - 1]
+                    else:  # the other player
+                        q.payoff_final = Constants.small_piles[group.last_node - 1]
+                break
 
 
 class Player(BasePlayer):
-    current_node = models.IntegerField(initial=1)
-    current_game = models.IntegerField(initial=1)
-    player_name = models.IntegerField()
+    identification = models.StringField(blank=True)
     player_take = models.StringField()
-    current_app_name = models.StringField()
     take = models.BooleanField(label='', widget=widgets.RadioSelectHorizontal)
+    payoff_final = models.CurrencyField()
 
 
 class Welcome(Page):
+    form_model = 'player'
+    form_fields = ['identification']
     def is_displayed(player):
         return player.round_number == 1
+
+    def error_message(player, values):
+        """Custom validation error"""
+        if not values['identification'].strip():  # empty or only spaces
+            return "You must enter your name."
 
 
 class Instructions(Page):
@@ -78,8 +78,7 @@ class Instructions(Page):
         return player.round_number == 1
 
     def before_next_page(player, timeout_happened):
-        player.current_app_name = Constants.name_in_url
-        player.player_name = player.id_in_group
+        player.participant.vars['identification'] = player.identification
         player.player_take = "False"
 
 
@@ -103,27 +102,26 @@ class Decision(Page):
 
     def vars_for_template(player):
         return dict(
-            player_name = player.id_in_group,
             game = 1,
             num_nodes =  Constants.num_nodes,
-            game_node = player.subsession.game_node,
-            large_pile = Constants.large_piles[player.subsession.game_node - 1],
-            small_pile = Constants.small_piles[player.subsession.game_node - 1]
+            game_node = player.round_number,
+            large_pile = Constants.large_piles[player.round_number - 1],
+            small_pile = Constants.small_piles[player.round_number - 1]
         )
 
     def before_next_page(player, timeout_happened):
-        player.current_app_name = Constants.name_in_url
-        player.player_name = player.id_in_group
+        group = player.group
 
         if player.take:
             player.player_take = "True"
-            player.current_game += 1
-            player.current_node = (player.current_game - 1) * Constants.num_nodes + 1
             player.group.game_on = False
-            player.group.stop_game()
+            group.stop_game()
         else:
             player.player_take = "False"
-            player.current_node += 1
+            if player.round_number < Constants.num_nodes:
+                pass
+            else:
+                group.stop_game()
 
 
 class WaitPage2(WaitPage):
@@ -133,16 +131,14 @@ class WaitPage2(WaitPage):
         return visible
 
     @staticmethod
-    def after_all_players_arrive(group):
-        subsession = group.subsession
-
+    def after_all_players_arrive(group: Group):
         players = group.get_players()
         someone_took = any(p.field_maybe_none('take') for p in players)
 
         if someone_took:
             pass
         else:
-            if subsession.game_node == Constants.num_nodes:
+            if group.round_number == Constants.num_nodes:
                 group.stop_game()
             else:
                 pass
@@ -160,7 +156,7 @@ class Results(Page):
     def vars_for_template(player):
         return dict(
             next_link = None,
-            player_name = player.id_in_group,
+            player_name = player.participant.vars['identification'],
             game=1,
             last_node=player.group.last_node,
             large_pile=Constants.large_piles[player.group.last_node-1],
@@ -168,6 +164,22 @@ class Results(Page):
             large_pile_pass=Constants.large_piles[-1],
             small_pile_pass=Constants.small_piles[-1]
         )
+    
+    def before_next_page(player, timeout_happened):
+        # store this round's data in participant.vars
+        round_data = {
+            'game_number': 1,
+            'round_number': player.round_number,
+            'player_id': player.id_in_group,
+            'take': player.field_maybe_none('take'),
+            'payoff': player.payoff_final
+        }
+        
+        if 'game_data' not in player.participant.vars:
+            player.participant.vars['game_data'] = []
+        
+        player.participant.vars['game_data'].append(round_data)
+        print(player.participant.vars['game_data'])
 
     def app_after_this_page(player, upcoming_apps):
         if not player.group.game_on:
@@ -180,7 +192,6 @@ class WaitPage3(WaitPage):
         return player.group.game_on and player.round_number in Constants.last_rounds
 
     wait_for_all_groups = True
-    after_all_players_arrive = 'advance_game'
 
 
 page_sequence = [Welcome, Instructions, WaitPage1, Decision, WaitPage2, Results, WaitPage3]

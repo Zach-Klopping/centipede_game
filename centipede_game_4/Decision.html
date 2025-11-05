@@ -1,5 +1,5 @@
 {% block title %}
-    Centipede Game {{ game }} for {{ player_name }} at Period {{ game_node }}
+    Centipede Game {{ game }} at Period {{ game_node }}
 {% endblock %}
 
 {% block content %}
@@ -8,9 +8,9 @@
 <!-- Player's color info -->
 <div class="card my-5">
     {% if player.id_in_group == 1 %}
-    <div class="card-header">You are the <font style="color:red;">RED</font> player</div>
+    <div class="card-header">You are the <span style="color:red;">RED</span> player</div>
     {% else %}
-    <div class="card-header">You are the <font style="color:blue;">BLUE</font> player</div>
+    <div class="card-header">You are the <span style="color:blue;">BLUE</span> player</div>
     {% endif %}
 </div>
 
@@ -44,112 +44,110 @@
         </thead>
         <tbody>
            {% if game_node == 1 %}
-            <tr style="background-color: #f8d7da;">
+            <tr style="background-color: #33ecff;">
                 <td>1</td>
-                <td><span style="color: red;">Player 1</span></td>
+                <td><span style="color: blue;">Player 2</span></td>
                 <td>Take Payoff or Pass</td>
-                <td><span style="color: red;">30</span></td>
                 <td>10</td>
+                <td><span style="color: blue;">30</span></td>
             </tr>
            {% else %}
-               <td>1</td>
-                <td><span style="color: red;">Player 1</span></td>
+               <tr>
+                <td>1</td>
+                <td><span style="color: blue;">Player 2</span></td>
                 <td>Take Payoff or Pass</td>
-                <td><span style="color: red;">30</span></td>
                 <td>10</td>
+                <td><span style="color: blue;">30</span></td>
            {% endif %}
            {% if game_node == 2 %}
-            <tr style="background-color: #33ecff;">
+            <tr style="background-color: #f8d7da;">
                 <td>2</td>
-                <td><span style="color: blue;">Player 2</span></td>
+                <td><span style="color: red;">Player 1</span></td>
                 <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">60</span></td>
                 <td>20</td>
-                <td><span style="color: blue;">60</span></td>
             </tr>
            {% else %}
                <tr>
                 <td>2</td>
-                <td><span style="color: blue;">Player 2</span></td>
+                <td><span style="color: red;">Player 1</span></td>
                 <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">60</span></td>
                 <td>20</td>
-                <td><span style="color: blue;">60</span></td>
-            </tr>
            {% endif %}
            {% if game_node == 3 %}
-            <tr style="background-color: #f8d7da;">
+            <tr style="background-color: #33ecff;">
                 <td>3</td>
-                <td><span style="color: red;">Player 1</span></td>
+                <td><span style="color: blue;">Player 2</span></td>
                 <td>Take Payoff or Pass</td>
-                <td><span style="color:red;">120</span></td>
                 <td>40</td>
+                <td><span style="color: blue;">120</span></td>
             </tr>
            {% else %}
                <tr>
                 <td>3</td>
-                <td><span style="color: red;">Player 1</span></td>
-                <td>Take Payoff or Pass</td>
-                <td><span style="color:red;">120</span></td>
-                <td>40</td>
-            </tr>
-            {% endif %}
-           {% if game_node == 4 %}
-            <tr style="background-color: #33ecff;">
-                <td>4</td>
                 <td><span style="color: blue;">Player 2</span></td>
                 <td>Take Payoff or Pass</td>
+                <td>40</td>
+                <td><span style="color: blue;">120</span></td>
+            </tr>
+           {% endif %}
+           {% if game_node == 4 %}
+            <tr style="background-color: #f8d7da;">
+                <td>4</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">240</span></td>
                 <td>80</td>
-                <td><span style="color: blue;">240</span></td>
             </tr>
            {% else %}
              <tr>
                 <td>4</td>
-                <td><span style="color: blue;">Player 2</span></td>
+                <td><span style="color: red;">Player 1</span></td>
                 <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">240</span></td>
                 <td>80</td>
-                <td><span style="color: blue;">240</span></td>
             </tr>
            {% endif %}
            {% if game_node == 5 %}
-            <tr style="background-color: #f8d7da;">
+            <tr style="background-color: #33ecff;">
                 <td>5</td>
-                <td><span style="color: red;">Player 1</span></td>
+                <td><span style="color: blue;">Player 2</span></td>
                 <td>Take Payoff or Pass</td>
-                <td><span style="color: red;">480</span></td>
                 <td>160</td>
+                <td><span style="color: blue;">480</span></td>
             </tr>
            {% else %}
                <tr>
                 <td>5</td>
-                <td><span style="color: red;">Player 1</span></td>
+                <td><span style="color: blue;">Player 2</span></td>
                 <td>Take Payoff or Pass</td>
-                <td><span style="color: red;">480</span></td>
                 <td>160</td>
+                <td><span style="color: blue;">480</span></td>
             </tr>
            {% endif %}
            {% if game_node == 6 %}
-            <tr style="background-color: #33ecff;">
+            <tr style="background-color: #f8d7da;">
                 <td>6</td>
-                <td><span style="color: blue;">Player 2</span></td>
+                <td><span style="color: red;">Player 1</span></td>
                 <td>Take</td>
+                <td><span style="color:red;">960</span></td>
                 <td>320</td>
-                <td><span style="color: blue;">960</span></td>
             </tr>
           {% else %}
             <tr>
                 <td>6</td>
-                <td><span style="color: blue;">Player 2</span></td>
+                <td><span style="color: red;">Player 1</span></td>
                 <td>Take</td>
+                <td><span style="color:red;">960</span></td>
                 <td>320</td>
-                <td><span style="color: blue;">960</span></td>
             </tr>
           {% endif %}
         </tbody>
     </table>
 </div>
-
-        <!-- Decision -->
-        <p>Do You Want To Take The Payoff Or Pass?</p>
-
+    <!-- Decision -->
+    <p>Do You Want To Take The Payoff Or Pass?</p>
     <div class="btn-div">
 
         <label id="take-label" class="btn btn-outline-primary">
@@ -161,11 +159,7 @@
             </label>
         {% endif %}
     </div>
-
-
-<button class="btn btn-primary" type="submit">Submit</button>
-
+<button style="margin-top: 2vh" class="btn btn-primary" type="submit">Submit</button>
   </div>
 </div>
-
 {% endblock %}

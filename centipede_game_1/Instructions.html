@@ -3,9 +3,6 @@
 {% endblock %}
 
 {% block content %}
-
-   <input class="btn btn-primary btn-large next-button otree-btn-next" type="submit" value="Start Experiment"/>
-
 <p>
     In this experiment, you and another player take turns deciding whether to <strong>Pass</strong> or <strong>Take</strong> a growing pile of money.
 </p>
@@ -20,9 +17,7 @@
 
 <p>
     This continues for a total of {{ Constants.num_nodes }} moves. The final payoffs are shown below. After the game is done, you will see a summary of the outcome. You will then continue to the next game. You will play a total of [4] games.
-
 </p>
-
 <br>
 
 <!-- Clean payoff table -->
@@ -83,5 +78,5 @@
         </tbody>
     </table>
 </div>
-    <br>
+<input class="btn btn-primary btn-large next-button otree-btn-next" type="submit" value="Start Experiment">
 {% endblock %}

@@ -1,5 +1,5 @@
 {% block title %}
-    Results of Player {{ player_name }} in Centipede Game {{ game }}
+     Results of Player {{ player_name }} in Centipede Game {{ game }}
 {% endblock %}
 
 {% block content %}
@@ -25,7 +25,7 @@
     <div class="card my-5"><div class="card-header">You decided to take the large pile at period {{last_node}}</div></div>
     <div class="card my-3">
     <div class="card-body">
-<!--        <p>You decided to take the large pile.</p>-->
+<!--    <p>You decided to take the large pile.</p>-->
         <p>Your payoff is: {{ large_pile }}</p>
         <p>Your opponent's payoff is: {{ small_pile }}</p>
     </div>
@@ -34,22 +34,14 @@
     <div class="card my-5"><div class="card-header">Your opponent decided to take the large pile at period {{last_node}}</div></div>
     <div class="card my-3">
     <div class="card-body">
-<!--        <p>Your opponent decided to take the large pile.</p>-->
+<!--    <p>Your opponent decided to take the large pile.</p>-->
         <p>Your payoff is: {{ small_pile }}</p>
         <p>Your opponent's payoff is: {{ large_pile }}</p>
     </div>
     </div>
 {% endif %}
 
-{% if result_html_contents != "" %}
-     <div class="table">
-      {{ result_html_contents|safe }}
-     </div>
-{% endif %}
+<p>Keep playing! Click below to join the next available game:</p>
 
-  <p>Keep playing! Click below to join the next available game:</p>
-    {% next_button %}
-
+{% next_button %}
 {% endblock %}
-
-
