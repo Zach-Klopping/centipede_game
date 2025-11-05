@@ -1,0 +1,177 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Centipede Game {{ game }} for {{ player_name }} at Period {{ game_node }}
+{% endblock %}
+
+{% block content %}
+<h3> Make Your Move!</h3>
+
+<!-- Player's color info -->
+<div class="card my-5">
+    {% if player.id_in_group == 1 %}
+    <div class="card-header">You are the <font style="color:red;">RED</font> player</div>
+    {% else %}
+    <div class="card-header">You are the <font style="color:blue;">BLUE</font> player</div>
+    {% endif %}
+</div>
+
+<!-- Opponent's decision -->
+{% if game_node > 1 %}
+<div class="card my-5">
+    <div class="card-header">Your opponent decided to pass</div>
+</div>
+{% endif %}
+
+<div class="card my-3">
+    <div class="card-body">
+
+        <!-- Piles -->
+        <p class="card-text">Your Take Payoff Is: {{ large_pile }}</p>
+        <p class="card-text">If You Take Your Opponents Payoff Is: {{ small_pile }}</p>
+
+        <br>
+
+       <!-- table -->
+    <div class="table">
+    <table class="table table-bordered" style="width: 80%; margin: auto; text-align: center;">
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Player</th>
+                <th>Action</th>
+                <th>Payoff (RED)</th>
+                <th>Payoff (BLUE)</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% if game_node == 1 %}
+            <tr style="background-color: #f8d7da;">
+                <td>1</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color: red;">30</span></td>
+                <td>10</td>
+            </tr>
+           {% else %}
+               <td>1</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color: red;">30</span></td>
+                <td>10</td>
+           {% endif %}
+           {% if game_node == 2 %}
+            <tr style="background-color: #33ecff;">
+                <td>2</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take Payoff or Pass</td>
+                <td>20</td>
+                <td><span style="color: blue;">60</span></td>
+            </tr>
+           {% else %}
+               <tr>
+                <td>2</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take Payoff or Pass</td>
+                <td>20</td>
+                <td><span style="color: blue;">60</span></td>
+            </tr>
+           {% endif %}
+           {% if game_node == 3 %}
+            <tr style="background-color: #f8d7da;">
+                <td>3</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">120</span></td>
+                <td>40</td>
+            </tr>
+           {% else %}
+               <tr>
+                <td>3</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">120</span></td>
+                <td>40</td>
+            </tr>
+            {% endif %}
+           {% if game_node == 4 %}
+            <tr style="background-color: #33ecff;">
+                <td>4</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take Payoff or Pass</td>
+                <td>80</td>
+                <td><span style="color: blue;">240</span></td>
+            </tr>
+           {% else %}
+             <tr>
+                <td>4</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take Payoff or Pass</td>
+                <td>80</td>
+                <td><span style="color: blue;">240</span></td>
+            </tr>
+           {% endif %}
+           {% if game_node == 5 %}
+            <tr style="background-color: #f8d7da;">
+                <td>5</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color: red;">480</span></td>
+                <td>160</td>
+            </tr>
+           {% else %}
+               <tr>
+                <td>5</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color: red;">480</span></td>
+                <td>160</td>
+            </tr>
+           {% endif %}
+           {% if game_node == 6 %}
+            <tr style="background-color: #33ecff;">
+                <td>6</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take</td>
+                <td>320</td>
+                <td><span style="color: blue;">960</span></td>
+            </tr>
+          {% else %}
+            <tr>
+                <td>6</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take</td>
+                <td>320</td>
+                <td><span style="color: blue;">960</span></td>
+            </tr>
+          {% endif %}
+        </tbody>
+    </table>
+    {% if result_html_contents != "" %}
+        {{ result_html_contents|safe }}
+    {% endif %}
+</div>
+
+        <!-- Decision -->
+        <p>Do You Want To Take The Payoff Or Pass?</p>
+
+    <div class="btn-div">
+
+        <label id="take-label" class="btn btn-outline-primary">
+            <input id="take" type="radio" name="take" value="True" required> Take
+        </label>
+        {% if game_node < num_nodes %}
+            <label id="pass-label" class="btn btn-outline-primary">
+                <input id="pass" type="radio" name="take" value="False" required> Pass
+            </label>
+        {% endif %}
+    </div>
+
+
+<button class="btn btn-primary" type="submit">Submit</button>
+
+  </div>
+</div>
+
+{% endblock %}

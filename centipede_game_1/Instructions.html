@@ -1,0 +1,90 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+   <input class="btn btn-primary btn-large next-button otree-btn-next" type="submit" value="Start Experiment"/>
+
+<p>
+    In this experiment, you and another player take turns deciding whether to <strong>Pass</strong> or <strong>Take</strong> a growing pile of money.
+</p>
+
+<p>
+    The game starts with a Large Pile and a Small Pile. On each turn:
+    <ul>
+        <li>If you <strong>Take</strong>, you get the Large Pile and your partner gets the Small Pile — and the game ends.</li>
+        <li>If you <strong>Pass</strong>, both piles double and your partner decides next.</li>
+    </ul>
+</p>
+
+<p>
+    This continues for a total of {{ Constants.num_nodes }} moves. The final payoffs are shown below. After the game is done, you will see a summary of the outcome. You will then continue to the next game. You will play a total of [4] games.
+
+</p>
+
+<br>
+
+<!-- Clean payoff table -->
+<div class="table">
+    <table class="table table-bordered" style="width: 80%; margin: auto; text-align: center;">
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Player</th>
+                <th>Action</th>
+                <th>Payoff (RED)</th>
+                <th>Payoff (BLUE)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color: red;">30</span></td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take Payoff or Pass</td>
+                <td>20</td>
+                <td><span style="color: blue;">60</span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color:red;">120</span></td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take Payoff or Pass</td>
+                <td>80</td>
+                <td><span style="color: blue;">240</span></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><span style="color: red;">Player 1</span></td>
+                <td>Take Payoff or Pass</td>
+                <td><span style="color: red;">480</span></td>
+                <td>160</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><span style="color: blue;">Player 2</span></td>
+                <td>Take</td>
+                <td>320</td>
+                <td><span style="color: blue;">960</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <br>
+{% endblock %}

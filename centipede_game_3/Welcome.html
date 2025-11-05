@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Welcome to the experiment
+{% endblock %}
+
+{% block content %}
+
+<p>
+    This is an experiment in group decision making, and you will be paid for your participation in cash,
+    at the end of the experiment. Different subjects may earn different amounts.
+    What you earn depends partly on your decisions, partly on the decisions of others, and partly on chance.
+</p>
+
+<p>
+    You and the other participants will be divided into two groups.
+    The groups will be labeled the <font style="color:red;">RED</font> group and the <font style="color:blue;">BLUE</font> group.
+    Your group/color will be randomly determined at the beginning of the experiment.
+</p>
+
+        {{ next_button }}
+
+{% endblock %}
