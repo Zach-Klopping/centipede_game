@@ -1,6 +1,6 @@
 from os import environ
 
-DEBUG = False
+DEBUG = True
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
@@ -11,7 +11,7 @@ SESSION_CONFIGS = [
         name='centipede',
         display_name="Centipede Game",
         num_demo_participants=2,
-        app_sequence=['centipede_game_1', 'centipede_game_2', 'centipede_game_3', 'centipede_game_end'],
+        app_sequence=['centipede_game_1', 'centipede_game_2', 'centipede_game_3', 'centipede_game_4'],
     ),
 ]
 

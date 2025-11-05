@@ -2,11 +2,11 @@ from otree.api import *
 import numpy as np
 
 
-doc = """ oTree App for the Centipede Game 2 """
+doc = """ oTree App for the Centipede Game 3 """
 
 
 class Constants(BaseConstants):
-    name_in_url = 'centipede_game_3'
+    name_in_url = 'centipede_game_4'
     players_per_group = 2
     num_nodes = 6
     num_games = 1
