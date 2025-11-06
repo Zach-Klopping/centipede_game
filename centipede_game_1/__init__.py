@@ -80,6 +80,7 @@ class Instructions(Page):
 
     def before_next_page(player, timeout_happened):
         player.participant.vars['identification'] = player.identification
+        player.participant.label = player.identification
         player.player_take = "False"
 
 
