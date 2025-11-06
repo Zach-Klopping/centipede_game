@@ -200,7 +200,8 @@ class Conclusion(Page):
         # Total payoff calculation
         total_payoff = sum(float(d.get('payoff', 0) or 0) for d in game_data)
         total_payoff_str = f"${total_payoff:.2f}"
-        
+        player.payoff = total_payoff  # Set player's payoff
+
         return dict(
             game_data=game_data,
             total_payoff=total_payoff_str,
