@@ -55,7 +55,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    identification_number = models.StringField(blank=True)
+    first = models.BooleanField(initial=False)
     player_take = models.StringField()
     take = models.BooleanField(label='', widget=widgets.RadioSelectHorizontal)
     payoff_final = models.CurrencyField()
@@ -90,6 +90,9 @@ class Decision(Page):
 
     def before_next_page(player, timeout_happened):
         group = player.group
+
+        if player.id_in_group == 1:
+            player.first = True
 
         if player.take:
             player.player_take = "True"
