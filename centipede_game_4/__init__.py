@@ -91,7 +91,7 @@ class Decision(Page):
     def before_next_page(player, timeout_happened):
         group = player.group
 
-        if player.id_in_group == 1:
+        if player.id_in_group == 2:
             player.first = True
 
         if player.take:
@@ -170,8 +170,7 @@ class Results(Page):
             player.participant.vars['game_data'] = []
         
         player.participant.vars['game_data'].append(round_data)
-        print(player.participant.vars['game_data'])
-
+        
 
 class Conclusion(Page):
     def is_displayed(player):

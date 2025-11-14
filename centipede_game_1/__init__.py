@@ -184,7 +184,6 @@ class Results(Page):
             player.participant.vars['game_data'] = []
         
         player.participant.vars['game_data'].append(round_data)
-        print(player.participant.vars['game_data'])
 
     def app_after_this_page(player, upcoming_apps):
         if not player.group.game_on:
